@@ -1,5 +1,5 @@
 
-package edu.poly.thangdtph27626;
+package edu.poly.thangdtph27626.product;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -25,8 +25,8 @@ public class ListProducts {
            lits.add(pd);
         }
         
-        for(Product exitProduct : lits){
-            exitProduct.outputProduct();
+        for(Product product : lits){
+            product.outputProduct();
         }
            pd.select();
            pd.update();

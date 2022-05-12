@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package edu.poly.thangdtph27626;
 
-import java.util.ArrayList;
+package edu.poly.thangdtph27626.product;
+
 import java.util.Scanner;
 
-/**
- *
- * @author LENOVO
- */
-public class Product extends DAO{
+
+public class Product extends DAO {
 
     private String name;
     private double price;
@@ -55,6 +48,7 @@ public class Product extends DAO{
         System.out.printf("ten san pham: %s \t gia: %.2f \t thue: %.2f \n",name,price,getImportTax() );
     }
 
+    
     @Override
     public void insert() {
         System.out.println("chen thanh cong ");
@@ -73,7 +67,6 @@ public class Product extends DAO{
     public void select() {
         System.out.println("lua chon cua ban");
     }
-    
-    
 
+    
 }

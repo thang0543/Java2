@@ -1,8 +1,8 @@
 
-package edu.poly.thangdtph27626;
+package edu.poly.thangdtph27626.product;
 
 
-abstract public  class DAO {
+public abstract  class DAO {
     abstract public void insert();
     abstract public void update();
     abstract public void delete();
