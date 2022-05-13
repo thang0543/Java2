@@ -4,7 +4,7 @@ package edu.poly.thangdtph27626.product;
 import java.util.Scanner;
 
 
-public class Product extends DAO {
+public class Product implements Dao{
 
     private String name;
     private double price;
@@ -17,9 +17,6 @@ public class Product extends DAO {
         this.price = price;
     }
 
-    public double getImportTax() {
-        return price * 0.1;
-    }
 
     public String getName() {
         return name;
@@ -37,6 +34,10 @@ public class Product extends DAO {
         this.price = price;
     }
 
+     public double getImportTax() {
+        return price * 0.1;
+    }
+     
     public void inputProduct(Scanner s) {
         System.out.print("nhap ten san pham: ");
         name = s.nextLine();
@@ -48,7 +49,8 @@ public class Product extends DAO {
         System.out.printf("ten san pham: %s \t gia: %.2f \t thue: %.2f \n",name,price,getImportTax() );
     }
 
-    
+   
+    // ghi đè lại các function của lớp Dao 
     @Override
     public void insert() {
         System.out.println("chen thanh cong ");
@@ -67,6 +69,8 @@ public class Product extends DAO {
     public void select() {
         System.out.println("lua chon cua ban");
     }
+
+    
 
     
 }
