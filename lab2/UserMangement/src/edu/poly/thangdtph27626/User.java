@@ -1,14 +1,15 @@
 package edu.poly.thangdtph27626;
 
-import java.nio.channels.Selector;
+import java.awt.Color;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class User extends javax.swing.JFrame {
 
     private ArrayList<DataUser> list = new ArrayList<>();
     private DefaultTableModel model;
+    private DataUser user = new DataUser();
 
     public User() {
         initComponents();
@@ -37,6 +38,7 @@ public class User extends javax.swing.JFrame {
         for (DataUser userAndAdmin : list) {
             model.addRow(new String[]{userAndAdmin.getUserName(), userAndAdmin.getPassword(), userAndAdmin.getRole()});
         }
+        // cập nhật lại dữ liệu 
         model.fireTableDataChanged();
     }
 
@@ -54,10 +56,13 @@ public class User extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         rdoUser = new javax.swing.JRadioButton();
         rdoAdmin = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnResset = new javax.swing.JButton();
+        errorUser = new javax.swing.JLabel();
+        errorPassword = new javax.swing.JLabel();
+        erroRole = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableList = new javax.swing.JTable();
@@ -73,6 +78,18 @@ public class User extends javax.swing.JFrame {
 
         jLabel2.setText("password");
 
+        txtUserName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtUserNameMouseClicked(evt);
+            }
+        });
+
+        txtPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPasswordMouseClicked(evt);
+            }
+        });
+
         jLabel3.setText("Role");
 
         buttonGroup1.add(rdoUser);
@@ -81,33 +98,39 @@ public class User extends javax.swing.JFrame {
         buttonGroup1.add(rdoAdmin);
         rdoAdmin.setText("Admin");
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Remove");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRemove.setText("Remove");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRemoveActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Update");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Reset");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnResset.setText("Reset");
+        btnResset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnRessetActionPerformed(evt);
             }
         });
+
+        errorUser.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
+        errorPassword.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
+        erroRole.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,23 +146,28 @@ public class User extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPassword)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rdoUser)
-                                .addGap(33, 33, 33)
-                                .addComponent(rdoAdmin))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtUserName)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(rdoUser)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(rdoAdmin))
+                                    .addComponent(errorUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(errorPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                                    .addComponent(erroRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jButton1)
+                        .addComponent(btnAdd)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnRemove)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(btnUpdate)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(btnResset)))
+                .addGap(36, 36, 36))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,21 +176,27 @@ public class User extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(5, 5, 5)
+                .addComponent(errorPassword)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(rdoUser)
                     .addComponent(rdoAdmin))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(erroRole)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnAdd)
+                    .addComponent(btnRemove)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnResset))
                 .addGap(39, 39, 39))
         );
 
@@ -179,6 +213,11 @@ public class User extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableList);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -186,7 +225,7 @@ public class User extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -220,32 +259,21 @@ public class User extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        StringBuilder bd = new StringBuilder();
-
-        if (txtUserName.getText().equals("")) {
-            bd.append("please input name");
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (checkForm()) {
+            user.setUserName(txtUserName.getText());
+            user.setPassword(new String(txtPassword.getPassword()));
+            user.setRole(rdoUser.isSelected() ? "user" : "admin");
+            list.add(user);
         }
-        if (txtPassword.getPassword().equals("")) {
-            bd.append("please input password");
-        }
-        if (bd.length() > 0) {
-            JOptionPane.showMessageDialog(this, bd.toString(), "error", JOptionPane.OK_OPTION);
-        }
-
-        DataUser user = new DataUser();
-        user.setUserName(txtUserName.getText());
-        user.setPassword(new String(txtPassword.getPassword()));
-        user.setRole(rdoUser.isSelected() ? "user" : "admin");
-        list.add(user);
         fillTable();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         fillTable();
     }//GEN-LAST:event_formWindowActivated
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         for (DataUser user : list) {
             if (user.getUserName().equals(txtUserName.getText())) {
                 list.remove(user);
@@ -253,22 +281,38 @@ public class User extends javax.swing.JFrame {
                 break;
             }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnRessetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRessetActionPerformed
         txtUserName.setText("");
         txtPassword.setText("");
         rdoUser.setSelected(false);
         rdoAdmin.setSelected(false);
-    }//GEN-LAST:event_jButton4ActionPerformed
+         errorUser.setText("");
+        txtUserName.setBorder(new LineBorder(Color.black));
+        errorPassword.setText("");
+        txtPassword.setBorder(new LineBorder(Color.black));
+    }//GEN-LAST:event_btnRessetActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        for (DataUser user : list) {
+            if (user.getUserName().equals(txtUserName.getText())) {
+                user.setPassword(new String(txtPassword.getPassword()));
+                user.setRole(rdoAdmin.isSelected() ? "Admin" : "user");
+                fillTable();
+                break;
+            }
+        }
+
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void tableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableListMouseClicked
         int select = tableList.getSelectedRow();
         if (select >= 0) {
             String userName = (String) model.getValueAt(select, 0);
 
             for (DataUser user : list) {
-                if (user.getUserName().equals(userName)){
+                if (user.getUserName().equals(userName)) {
                     txtUserName.setText(user.getUserName());
                     txtPassword.setText(user.getPassword());
                     if (user.getRole().equals("user")) {
@@ -280,7 +324,56 @@ public class User extends javax.swing.JFrame {
                 }
             }
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_tableListMouseClicked
+
+    private void txtUserNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserNameMouseClicked
+        errorUser.setText("");
+        txtUserName.setBorder(new LineBorder(Color.black));
+    }//GEN-LAST:event_txtUserNameMouseClicked
+
+    private void txtPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPasswordMouseClicked
+        errorPassword.setText("");
+        txtPassword.setBorder(new LineBorder(Color.black));
+    }//GEN-LAST:event_txtPasswordMouseClicked
+
+    private boolean checkForm() {
+        String userName = txtUserName.getText();
+        String password = String.valueOf(txtPassword.getPassword());
+        int count = 0;
+        if (userName.equalsIgnoreCase("")) {
+            errorUser.setText("please input username ");
+            txtUserName.setBorder(new LineBorder(Color.red));
+            count++;
+        } else if (checkUser()) {
+            errorUser.setText(" username already exist");
+            txtUserName.setBorder(new LineBorder(Color.red));
+            count++;
+        } 
+        if (password.equalsIgnoreCase("")) {
+            errorPassword.setText("please input password");
+            txtPassword.setBorder(new LineBorder(Color.red));
+            count++;
+        } 
+        if (!rdoAdmin.isSelected() && !rdoUser.isSelected()) {
+            erroRole.setText("please choose role");
+            count++;
+        } else {
+            erroRole.setText("");
+        }
+        if (count != 0) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkUser() {
+        for (DataUser user : list) {
+            if (txtUserName.getText().equals(user.getUserName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void main(String args[]) {
 
@@ -292,11 +385,14 @@ public class User extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnResset;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel erroRole;
+    private javax.swing.JLabel errorPassword;
+    private javax.swing.JLabel errorUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

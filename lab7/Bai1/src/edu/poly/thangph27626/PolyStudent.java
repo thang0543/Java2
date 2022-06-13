@@ -32,7 +32,7 @@ public class PolyStudent {
     public void output() {
         System.out.printf("ten sinh vien la: %-30s", name);
 
-        switch (this.career) {
+        switch (career) {
             case UDPM:
                 System.out.println("nganh: Cong nghe thong tin");
                 break;

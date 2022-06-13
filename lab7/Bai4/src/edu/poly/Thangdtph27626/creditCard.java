@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package edu.poly.Thangdtph27626;
 
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
-
 
 public class creditCard extends javax.swing.JFrame {
 
@@ -14,7 +9,6 @@ public class creditCard extends javax.swing.JFrame {
         initComponents();
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -65,19 +59,28 @@ public class creditCard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckActionPerformed
-        try {
-            boolean choose =  XPoly.isCardNumber(txtCard.getText());
-             if(choose){
-                 JOptionPane.showMessageDialog(this,"so hop le" ,"success", JOptionPane.OK_OPTION);
-             }else{
-                 JOptionPane.showMessageDialog(this,"so khong hop le" ,"erro", JOptionPane.OK_OPTION);
-             }
-        } catch (HeadlessException e) {
+
+        if (txtCard.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui long khong de trong", "erro", JOptionPane.OK_OPTION);
+        } else {
+
+            try {
+                String number = txtCard.getText().replaceAll(" ", "").trim();
+                boolean choose = XPoly.isCardNumber(number);
+                if (choose) {
+                    JOptionPane.showConfirmDialog(this, "so hop le", "success", JOptionPane.OK_OPTION);
+                } else {
+                    JOptionPane.showConfirmDialog(this, "so khong hop le", "success", JOptionPane.OK_OPTION);
+                }
+            } catch (HeadlessException | NumberFormatException e) {
+                System.out.println(e);
+                JOptionPane.showMessageDialog(this, "Vui long nhap so", "erro", JOptionPane.OK_OPTION);
+            }
         }
     }//GEN-LAST:event_btnCheckActionPerformed
 
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new creditCard().setVisible(true);

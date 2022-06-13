@@ -7,20 +7,22 @@ import javax.swing.table.DefaultTableModel;
 
 public class employeeManagerTable extends javax.swing.JFrame {
 
-    
+    private  ArrayList<Staff> list = new ArrayList<>();
     public employeeManagerTable() {
         initComponents();
-        dataTable();
+        dataStaff();
+        initTable();
     }
 
-    public void dataTable(){
-        ArrayList<Staff> list = new ArrayList<>();
-        list.add(new Staff("NV01","Nguyễn Nghiệm","Việt Nam","Male","Maried"));
-        list.add(new Staff("NV02","Lê Thị Hương Thảo","Singapore","Female","Maried"));
-        list.add(new Staff("NV03","Nguyễn Đình Thiên Long","United States","Male","Single"));
-        list.add(new Staff("NV04","Nguyễn Đình Hoàng Long","Malaysia","Male","Single"));
-      
-        DefaultTableModel model = new DefaultTableModel();
+   private void dataStaff(){
+        list.add(new Staff("NV01","Nguyễn Văn Thiện","Việt Nam","Male","Maried"));
+        list.add(new Staff("NV02","Lê Thị Thu","Singapore","Female","Maried"));
+        list.add(new Staff("NV03","Nguyễn Đình  Long","United States","Male","Single"));
+        list.add(new Staff("NV04","Dương Thị Dào","Malaysia","Female","Single"));
+    }
+    
+    private void initTable(){
+       DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new String[]{"ID","Full Name","Country","Gender","status"});
         
         for(Staff staff : list){

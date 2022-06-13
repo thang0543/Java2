@@ -52,7 +52,7 @@ abstract public class DAO<Entity> {
         }
     }
     
-    public void ou(){
+    public void out(){
         for(Entity p : list){
             System.out.println(p);
         }

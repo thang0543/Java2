@@ -14,7 +14,7 @@ public class employeeManager extends javax.swing.JFrame {
     }
 
     public void listCountry(){
-        String data[] = {"Việt Nam", "United States", "Singapore", "Malaysia"};
+        String data[] = {"Việt Nam", "Trung Quốc", "Singapore", "Mỹ"};
         cboCountry.setModel(new DefaultComboBoxModel(data));
     }
     

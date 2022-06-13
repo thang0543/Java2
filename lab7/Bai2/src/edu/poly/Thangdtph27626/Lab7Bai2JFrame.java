@@ -9,6 +9,7 @@ public class Lab7Bai2JFrame extends javax.swing.JFrame {
     
     public Lab7Bai2JFrame() {
         initComponents();
+        txtSum.setEnabled(false);
     }
 
     
@@ -33,7 +34,7 @@ public class Lab7Bai2JFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("nhap so thu 1:");
+        jLabel1.setText("nhap so thu nhất:");
 
         jLabel2.setText("nhap so thu hai:");
 
@@ -97,7 +98,7 @@ public class Lab7Bai2JFrame extends javax.swing.JFrame {
 
             txtSum.setText(String.valueOf(sum));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e, "erro", JOptionPane.YES_OPTION);
+            JOptionPane.showMessageDialog(this, "Vui long nhap so", "erro", JOptionPane.YES_OPTION);
         }
     }//GEN-LAST:event_btnSumActionPerformed
 

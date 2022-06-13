@@ -56,6 +56,6 @@ public class Student {
        return "xuất sắc";
    }
    public boolean bonus(){
-       return poin > 9;
+       return poin >= 7.5;
    }
 }

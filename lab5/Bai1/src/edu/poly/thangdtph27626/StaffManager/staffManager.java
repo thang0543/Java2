@@ -1,9 +1,12 @@
 package edu.poly.thangdtph27626.StaffManager;
 
 import edu.poly.thangdtph27626.XFile.XFile;
+import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class staffManager extends javax.swing.JFrame {
@@ -49,6 +52,8 @@ public class staffManager extends javax.swing.JFrame {
         btnRead = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableStaff = new javax.swing.JTable();
+        erroName = new javax.swing.JLabel();
+        erroPoin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,7 +64,19 @@ public class staffManager extends javax.swing.JFrame {
 
         jLabel2.setText("họ và tên ");
 
+        txtName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNameMouseClicked(evt);
+            }
+        });
+
         jLabel3.setText("điểm");
+
+        txtPoin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPoinMouseClicked(evt);
+            }
+        });
 
         btnadd.setText("thêm ");
         btnadd.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +113,10 @@ public class staffManager extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableStaff);
 
+        erroName.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
+        erroPoin.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,13 +129,17 @@ public class staffManager extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtPoin, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addGap(36, 36, 36)
-                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(erroName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(erroPoin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtPoin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(78, 78, 78)
                         .addComponent(btnadd)
@@ -136,30 +161,36 @@ public class staffManager extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(erroName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPoin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                .addGap(9, 9, 9)
+                .addComponent(erroPoin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnadd)
                     .addComponent(btnSave)
                     .addComponent(btnRead))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
-        checkEmpty();
-        checkSalary();
-        Staff nv = new Staff();
-        nv.setName(txtName.getText());
-        nv.setSalary(Double.valueOf(txtPoin.getText()));
-        list.add(nv);
+        
+        if(checkEmpty() == true && checkSalary() == true){
+            Staff nv = new Staff();
+            nv.setName(txtName.getText());
+            nv.setSalary(Double.valueOf(txtPoin.getText()));
+            list.add(nv);
+        }
+     
         fillToTable();
     }//GEN-LAST:event_btnaddActionPerformed
 
@@ -168,33 +199,56 @@ public class staffManager extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadActionPerformed
-        list = (List<Staff>) XFile.readObject("C:\\Users\\LENOVO\\Desktop\\staffs.dat");
+        try {
+            list = (List<Staff>) XFile.readObject("C:\\Users\\LENOVO\\Desktop\\staffs.dat");
+        } catch (IOException e) {
+        }
         this.fillToTable();
     }//GEN-LAST:event_btnReadActionPerformed
 
-    private void checkSalary() {
+    private void txtNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNameMouseClicked
+        erroName.setText("");
+        txtName.setBorder(new LineBorder(Color.black));
+    }//GEN-LAST:event_txtNameMouseClicked
+
+    private void txtPoinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPoinMouseClicked
+        erroPoin.setText("");
+        txtPoin.setBorder(new LineBorder(Color.black));
+    }//GEN-LAST:event_txtPoinMouseClicked
+
+    private boolean checkSalary() {
         try {
-            double check = Double.valueOf(txtPoin.getText());
-            if (check < 0) {
-                JOptionPane.showMessageDialog(this, "vui long nhap so > 0", "erro", JOptionPane.OK_OPTION);
+            double poin = Double.valueOf(txtPoin.getText());
+            if (poin < 0 || poin > 10 ) {
+                 erroPoin.setText("please input poin 1 -> 10");
+                 txtPoin.setBorder(new LineBorder(Color.red));
+                 return false;
             }
+            return  true;
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "vui long nhap so", "erro", JOptionPane.OK_OPTION);
+            erroPoin.setText("please input number");
+            txtPoin.setBorder(new LineBorder(Color.red));
+            return false;
         }
+        
     }
 
-    private void checkEmpty() {
-        StringBuilder sb = new StringBuilder();
-
+    private boolean checkEmpty() {
+        int count = 0;
         if (txtName.getText().equals("")) {
-            sb.append("vui long nhap ten \n");
+            erroName.setText("please input name");
+            txtName.setBorder(new LineBorder(Color.red));
+            count ++;
         }
+       
         if (txtPoin.getText().equals("")) {
-            sb.append("vui long nhap luong \n");
+            erroPoin.setText("please input poin");
+            count++;
         }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb.toString(), "erro", JOptionPane.OK_OPTION);
+        if(count != 0){
+            return false;
         }
+        return  true;
     }
 
     public static void main(String args[]) {
@@ -210,6 +264,8 @@ public class staffManager extends javax.swing.JFrame {
     private javax.swing.JButton btnRead;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnadd;
+    private javax.swing.JLabel erroName;
+    private javax.swing.JLabel erroPoin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

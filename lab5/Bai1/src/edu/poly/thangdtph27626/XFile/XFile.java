@@ -10,6 +10,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 
 
 public class XFile {
@@ -29,6 +36,7 @@ public class XFile {
         }
     }
 
+    
     public static void write(String path, byte[] data) throws IOException{
         FileOutputStream fos;
         try {
@@ -39,16 +47,16 @@ public class XFile {
         }
     }
     
-    public static Object readObject(String path){
-        ObjectInputStream ois;
-        
+    public static Object readObject(String path) throws IOException{
+         ObjectInputStream ois = null;
         try{
             ois = new ObjectInputStream(new FileInputStream(path));
-            Object object = ois.readObject();
-            ois.close();
-            return object;
+           
+            return ois.readObject();
         }catch(IOException | ClassNotFoundException e){
             throw new RuntimeException(e);
+        }finally{
+             ois.close();
         }
     }
     
@@ -63,38 +71,42 @@ public class XFile {
         }
     }
     
-    public static String  readBufferedWrite(String path) throws IOException{
-        BufferedReader br ;
-        
+    public static String  readBufferedWrite(String path, JTextArea txtcontent) throws IOException{
+         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(path));
-//            while(true){
-//                String line = br.readLine();
-//                if(line == null){
-//                    break;
-//                }else{
-//                   
-//                }
-//            } 
-            br.close();
-            return br.readLine();
-        } catch (FileNotFoundException e) {
+            while (true) {
+                String line = br.readLine();
+                if (line == null) {
+                    break;
+                } else {
+                    txtcontent.append(line);
+                    txtcontent.append("\r \n");
+                }
+            }
+             return br.readLine();
+        } catch (FileNotFoundException  e) {
             throw new RuntimeException(e);
-        }
+        } 
     }
     
      public static void writeBufferedWrite(String path, String data) throws IOException{
-         BufferedWriter bw ;
+//       
+
         
         try {
-            bw = new BufferedWriter(new FileWriter(path));
-            bw.write(data);
-            bw.newLine();
-            bw.close();
-           
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            BufferedWriter buffer = new BufferedWriter(new FileWriter(path));
+            buffer.write(data);
+
+            buffer.close();
+
+//            txt_NoiDung.setText("");
+//            txt_TenFile.setText("");
+        } catch (Exception e) {
+            
         }
     }
 
 }
+//
+// 

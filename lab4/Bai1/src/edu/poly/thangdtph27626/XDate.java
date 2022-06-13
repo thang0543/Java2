@@ -7,6 +7,7 @@ import java.util.Date;
 
 
 public class XDate {
+    
     public static Date parse(String text) throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");      
         return sdf.parse(text);

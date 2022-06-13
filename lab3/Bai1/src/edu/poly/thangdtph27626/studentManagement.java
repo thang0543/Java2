@@ -1,59 +1,67 @@
-
 package edu.poly.thangdtph27626;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-
 
 public class studentManagement extends javax.swing.JFrame {
 
     private ArrayList<Student> List = new ArrayList<>();
     private DefaultTableModel mode;
+    private String number = "([\\d]+.[\\d]+|[\\d]+)";
+
     public studentManagement() {
         initComponents();
+        setLocationRelativeTo(null);
+        txtGender.setEnabled(false);
+        checkBox.setEnabled(false);
         dataStudent();
         initTable();
         filltoTable();
         initCombox();
     }
 
-    public void filltoTable(){
-        while(mode.getRowCount() > 0){
+    public void filltoTable() {
+        while (mode.getRowCount() > 0) {
             mode.removeRow(0);
         }
-        
-        for(Student sudent : List){
-            mode.addRow(new String[]{sudent.getFullName(),""+sudent.getPoin(),sudent.getMajors(),sudent.getGrade(),""+sudent.bonus()});
+
+        for (Student sudent : List) {
+            Object[] row = new Object[]{sudent.getFullName(), sudent.getPoin(), sudent.getMajors(), sudent.getGrade(),  sudent.bonus()};
+            mode.addRow(row);
         }
         mode.fireTableDataChanged();
     }
-    public void initTable(){
+
+    
+    public void initTable() {
         mode = new DefaultTableModel();
-        mode.setColumnIdentifiers(new String[]{"họ tên","điểm","ngành","học lực","thưởng"});
-        tableStudent.setModel(mode);
+        mode.setColumnIdentifiers(new String[]{"họ tên", "điểm", "ngành", "học lực", "thưởng"});
+        tblStudent.setModel(mode);
     }
-     public void initCombox(){
-        String[] majors =new String[]{"công nghệ thông tin","thiết kế ","marketing","Điện tử","tự động hóa"};
-         DefaultComboBoxModel<String> cbModel = new DefaultComboBoxModel(majors);
-         cboMajors.setModel(cbModel);
-     }
-    public void dataStudent(){
-        List.add(new Student("Dương Tu Thắng",10,"công nghệ thông tin"));
-        List.add(new Student("lê văn Sơn",10,"công nghệ thông tin"));
-        List.add(new Student("Nguyễn Văn Hùng",10,"công nghệ thông tin"));
-        List.add(new Student("Trần Thị Phương",10,"công nghệ thông tin"));
+
+    public void initCombox() {
+        String[] majors = new String[]{"công nghệ thông tin", "thiết kế ", "marketing", "Điện tử", "tự động hóa"};
+        cboMajors.setModel(new DefaultComboBoxModel(majors));
     }
+
+    public void dataStudent() {
+        List.add(new Student("Dương Tu Thắng", 10, "công nghệ thông tin"));
+        List.add(new Student("lê văn Sơn", 8, "công nghệ thông tin"));
+        List.add(new Student("Nguyễn Văn Hùng", 10, "công nghệ thông tin"));
+        List.add(new Student("Trần Thị Phương", 10, "công nghệ thông tin"));
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableStudent = new javax.swing.JTable();
+        tblStudent = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -70,10 +78,12 @@ public class studentManagement extends javax.swing.JFrame {
         btnNew = new javax.swing.JButton();
         sortName = new javax.swing.JButton();
         sortPoin = new javax.swing.JButton();
+        errorName = new javax.swing.JLabel();
+        errorPoin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableStudent.setModel(new javax.swing.table.DefaultTableModel(
+        tblStudent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -84,21 +94,33 @@ public class studentManagement extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tableStudent.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblStudent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableStudentMouseClicked(evt);
+                tblStudentMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableStudent);
+        jScrollPane1.setViewportView(tblStudent);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(255, 0, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản LÍ Sinh viên");
+        jLabel1.setText("Quản Lí Sinh viên");
 
         jLabel2.setText("họ tên ");
 
         jLabel3.setText("điểm");
+
+        txtName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNameMouseClicked(evt);
+            }
+        });
+
+        txtPoin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPoinMouseClicked(evt);
+            }
+        });
 
         jLabel4.setText("ngành học");
 
@@ -150,16 +172,20 @@ public class studentManagement extends javax.swing.JFrame {
             }
         });
 
+        errorName.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
+        errorPoin.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
@@ -175,26 +201,29 @@ public class studentManagement extends javax.swing.JFrame {
                                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(21, 21, 21)
+                                        .addComponent(sortPoin))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(checkBox, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
-                                                .addComponent(txtPoin)
-                                                .addComponent(cboMajors, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtGender))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(errorPoin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                                            .addComponent(txtPoin)
+                                            .addComponent(cboMajors, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtGender)
+                                            .addComponent(errorName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btnAdd)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnDelete)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(checkBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                        .addComponent(btnAdd)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(btnDelete)))
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btnUpdate)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(btnNew))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addComponent(sortPoin)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                                .addComponent(btnNew)))))))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -206,11 +235,15 @@ public class studentManagement extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtPoin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorPoin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(cboMajors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -226,13 +259,13 @@ public class studentManagement extends javax.swing.JFrame {
                     .addComponent(btnDelete)
                     .addComponent(btnUpdate)
                     .addComponent(btnNew))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sortName)
                     .addComponent(sortPoin))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -240,64 +273,60 @@ public class studentManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-       txtName.setText("");
-       txtPoin.setText("");
-       checkBox.setSelected(false);
-       txtGender.setText("");
-       
+        txtName.setText("");
+        txtPoin.setText("");
+        checkBox.setSelected(false);
+        txtGender.setText("");
+
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       StringBuilder sb = new StringBuilder();
-        if(txtName.getText().equals("")){
-           sb.append("please input name\n");
-       }
-        if(txtPoin.getText().equals("")){
-           sb.append("please input poin");
-       }
-        if(sb.length() > 0){
-            JOptionPane.showMessageDialog(this, sb.toString(),"error",JOptionPane.OK_OPTION);
+        if (checkForm()) {
+            Student student = new Student();
+            student.setFullName(txtName.getText());
+            student.setPoin(Double.parseDouble(txtPoin.getText()));
+            student.setMajors((String) cboMajors.getSelectedItem());
+            List.add(student);
+
+            txtGender.setText(student.getGrade());
+            checkBox.setSelected(student.bonus());
+            filltoTable();
         }
-        
-        Student sd = new Student();
-        sd.setFullName(txtName.getText());
-        sd.setPoin(Double.parseDouble(txtPoin.getText()));
-        sd.setMajors((String) cboMajors.getSelectedItem());
-        
-        List.add(sd);
-        txtGender.setText(sd.getGrade());
-        checkBox.setSelected(sd.bonus());
-        filltoTable();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int index = tableStudent.getSelectedRow();
-        Student sd = List.remove(index);
-        
+        int index = tblStudent.getSelectedRow();
+        Student student = List.remove(index);
+
         filltoTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void tableStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableStudentMouseClicked
-       int index = tableStudent.getSelectedRow();
-       Student sd = List.get(index);
-       
-       txtName.setText(sd.getFullName());
-       txtPoin.setText(String.valueOf(sd.getPoin()));
-       cboMajors.setSelectedItem(sd.getMajors());
-       txtGender.setText(sd.getGrade());
-       checkBox.setSelected(sd.bonus());
-    }//GEN-LAST:event_tableStudentMouseClicked
+    private void tblStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStudentMouseClicked
+        int index = tblStudent.getSelectedRow();
+        Student student = List.get(index);
+
+        txtName.setText(student.getFullName());
+        txtPoin.setText(String.valueOf(student.getPoin()));
+        cboMajors.setSelectedItem(student.getMajors());
+        txtGender.setText(student.getGrade());
+        checkBox.setSelected(student.bonus());
+    }//GEN-LAST:event_tblStudentMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        int index = tableStudent.getSelectedRow();
-       Student sd = List.get(index);
-       
-       sd.setFullName(txtName.getText());
-       sd.setPoin(Double.parseDouble(txtPoin.getText()));
-       sd.setMajors((String)cboMajors.getSelectedItem());
-       txtGender.setText(sd.getGrade());
-       checkBox.setSelected(sd.bonus());
-       filltoTable();
+        int index = tblStudent.getSelectedRow();
+        for(int i = 0; i < tblStudent.getRowCount(); i++){
+            if(txtName.getText().equals(tblStudent.getValueAt(i, 0))){
+            Student student = new Student();
+            student.setFullName(txtName.getText());
+            student.setPoin(Double.parseDouble(txtPoin.getText()));
+            student.setMajors((String) cboMajors.getSelectedItem());
+            List.set(i,student);
+
+            txtGender.setText(student.getGrade());
+            checkBox.setSelected(student.bonus());
+            }
+        }
+        filltoTable();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void sortNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortNameActionPerformed
@@ -306,28 +335,60 @@ public class studentManagement extends javax.swing.JFrame {
             public int compare(Student o1, Student o2) {
                 return o1.getFullName().compareTo(o2.getFullName());
             }
-            
+
         };
-        Collections.sort(List,com);
+        Collections.sort(List, com);
         filltoTable();
     }//GEN-LAST:event_sortNameActionPerformed
 
     private void sortPoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortPoinActionPerformed
-        Comparator<Student> com = new Comparator<Student>() {
-            @Override
-            public int compare(Student o1, Student o2) {
-               Double poin1 = o1.getPoin();
-               Double poin2 = o2.getPoin();
-               return  poin1.compareTo(poin2);
-            }
-        };
-        Collections.sort(List,com);
+
+        List.sort((o1, o2) -> {
+            Double poin1 = o1.getPoin();
+            Double poin2 = o2.getPoin();
+            return poin1.compareTo(poin2);
+        });
         filltoTable();
     }//GEN-LAST:event_sortPoinActionPerformed
 
-    
+    private void txtNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNameMouseClicked
+        errorName.setText("");
+        txtName.setBorder(new LineBorder(Color.black));
+    }//GEN-LAST:event_txtNameMouseClicked
+
+    private void txtPoinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPoinMouseClicked
+        errorPoin.setText("");
+        txtPoin.setBorder(new LineBorder(Color.black));
+    }//GEN-LAST:event_txtPoinMouseClicked
+
+    private boolean checkForm() {
+        int count = 0;
+        if (txtName.getText().isEmpty()) {
+            errorName.setText("vui lòng nhập tên");
+            txtName.setBorder(new LineBorder(Color.red));
+            count++;
+        }
+        if (txtPoin.getText().isEmpty()) {
+            errorPoin.setText("vui long nhập điểm");
+            txtPoin.setBorder(new LineBorder(Color.red));
+            count++;
+        } else if (!txtPoin.getText().matches(number)) {
+            errorPoin.setText("vui long nhập số");
+            txtPoin.setBorder(new LineBorder(Color.red));
+            count++;
+        } else if (Float.parseFloat(txtPoin.getText()) > 10 || Float.parseFloat(txtPoin.getText()) < 0) {
+            errorPoin.setText("vui long nhập điểm trong khoảng 0 -> 10");
+            txtPoin.setBorder(new LineBorder(Color.red));
+            count++;
+        } 
+        if (count != 0) {
+            return false;
+        }
+        return true;
+    }
+
     public static void main(String args[]) {
-       
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new studentManagement().setVisible(true);
@@ -342,6 +403,8 @@ public class studentManagement extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cboMajors;
     private javax.swing.JCheckBox checkBox;
+    private javax.swing.JLabel errorName;
+    private javax.swing.JLabel errorPoin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -350,7 +413,7 @@ public class studentManagement extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton sortName;
     private javax.swing.JButton sortPoin;
-    private javax.swing.JTable tableStudent;
+    private javax.swing.JTable tblStudent;
     private javax.swing.JTextField txtGender;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPoin;

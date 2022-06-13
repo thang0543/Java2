@@ -1,6 +1,7 @@
 package edu.poly.Thangdtph27626;
 
 import javax.swing.JOptionPane;
+import static java.lang.Math.*;
 
 public class Lab7Bai2JFrame extends javax.swing.JFrame {
 
@@ -8,12 +9,14 @@ public class Lab7Bai2JFrame extends javax.swing.JFrame {
         initComponents();
         readonly();
     }
-    public void readonly(){
+
+    public void readonly() {
         txtSqrtA.setEditable(false);
         txtPowA_B.setEditable(false);
         txtMin.setEditable(false);
         txtMax.setEditable(false);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -127,21 +130,26 @@ public class Lab7Bai2JFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
-        try {
-            int number1 = Integer.parseInt(txtnumber1.getText());
-            int number2 = Integer.parseInt(txtNumber2.getText());
+        if (txtnumber1.getText().isEmpty()||txtNumber2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "vui long khong de trong", "erro", JOptionPane.YES_OPTION);
+        } else {
+            try {
 
-            double sqrt = Math.sqrt(number1);
-            double pow = Math.pow(number1, number2);
-            int max = Math.max(number1, number2);
-            int min = Math.min(number1, number2);
-            
-            txtSqrtA.setText(String.valueOf(sqrt));
-            txtPowA_B.setText(String.valueOf(pow));
-            txtMax.setText(String.valueOf(max));
-            txtMin.setText(String.valueOf(min));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e, "erro", JOptionPane.YES_OPTION);
+                int number1 = Integer.parseInt(txtnumber1.getText());
+                int number2 = Integer.parseInt(txtNumber2.getText());
+
+                double sqrt = sqrt(number1);
+                double pow = pow(number1, number2);
+                int max = max(number1, number2);
+                int min = min(number1, number2);
+
+                txtSqrtA.setText(String.valueOf(sqrt));
+                txtPowA_B.setText(String.valueOf(pow));
+                txtMax.setText(String.valueOf(max));
+                txtMin.setText(String.valueOf(min));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "vui long nhap so", "erro", JOptionPane.YES_OPTION);
+            }
         }
     }//GEN-LAST:event_btnRunActionPerformed
 

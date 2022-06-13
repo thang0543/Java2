@@ -7,6 +7,7 @@ import java.util.Set;
 public class MapDemo {
 
     public static void main(String[] args) {
+       
         Map<String, Student> map = new HashMap<>();
 
         Student sd1 = new Student();
